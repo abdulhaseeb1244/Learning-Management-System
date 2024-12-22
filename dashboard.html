@@ -44,6 +44,7 @@
         bottom: 0px;
         width: 100%;
       }
+
       /* Dark Mode */
       .dark body {
         background-color: #121212;
@@ -68,18 +69,43 @@
       .dark .course-btn:hover {
         background-color: #4e4e4e;
       }
+
+      /* Navbar on small screens */
+      @media (max-width: 768px) {
+        .navbar-links {
+          display: block;
+          width: 100%;
+        }
+        .navbar-links a {
+          display: block;
+          width: 100%;
+          text-align: center;
+          padding: 10px;
+          margin-top: 8px;
+        }
+        .navbar-container {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .navbar-button {
+          margin-top: 10px;
+        }
+      }
     </style>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-blue-200 to-blue-500">
     <!-- Navbar -->
-    <nav class="bg-blue-700 p-4 text-white shadow-md flex justify-between items-center">
-      <h1 class="text-2xl font-bold"><i class='bx bxs-graduation'></i> LMS Dashboard</h1>
-      <div class="flex space-x-4">
-        <button id="theme-toggle" class="bg-blue-500 px-3 py-1 rounded-md text-sm font-semibold">
-          Light Mode
-        </button>
-        <a href="task.html" class="bg-blue-500 px-3 py-1 rounded-md text-sm">Tasks</a>
-        <button id="logout-btn" class="bg-red-500 px-3 py-1 rounded-md text-sm">Logout</button>
+    <nav class="bg-blue-700 p-4 text-white shadow-md">
+      <div class="flex justify-between items-center navbar-container">
+        <h1 class="text-2xl font-bold"><i class='bx bxs-graduation'></i> LMS Dashboard</h1>
+        <div class="flex space-x-4 navbar-links">
+          <button id="theme-toggle" class="bg-blue-500 px-3 py-1 rounded-md text-sm font-semibold navbar-button">
+            Light Mode
+          </button>
+          <a href="about.html" class="bg-blue-500 px-3 py-1 rounded-md text-sm navbar-button">About</a>
+          <a href="task.html" class="bg-blue-500 px-3 py-1 rounded-md text-sm navbar-button">Tasks</a>
+          <button id="logout-btn" class="bg-red-500 px-3 py-1 rounded-md text-sm navbar-button">Logout</button>
+        </div>
       </div>
     </nav>
 

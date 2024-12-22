@@ -13,6 +13,7 @@
       <p class="text-gray-600 text-center mb-6">Create a new account to access the LMS system.</p>
       <div>
         <input id="signup-username" type="text" placeholder="👤 Username" class="w-full mb-4 p-3 border rounded shadow-sm focus:ring focus:ring-green-300" />
+        <input id="signup-email" type="email" placeholder="📧 Email Address" class="w-full mb-4 p-3 border rounded shadow-sm focus:ring focus:ring-green-300" />
         <input id="signup-password" type="password" placeholder="🔑 Password" class="w-full mb-4 p-3 border rounded shadow-sm focus:ring focus:ring-green-300" />
         <button id="signup-btn" class="w-full bg-green-600 text-white py-3 rounded-lg shadow-lg hover:bg-green-800 transition duration-300">
           Sign Up
@@ -25,13 +26,35 @@
     <script>
       document.getElementById("signup-btn").addEventListener("click", () => {
         const username = document.getElementById("signup-username").value.trim();
+        const email = document.getElementById("signup-email").value.trim();
         const password = document.getElementById("signup-password").value.trim();
-        if (username && password) {
-          alert("Account created successfully! Return to login.");
-          window.location.href = "login.html";
-        } else {
-          alert("Please fill out all fields.");
+
+        if (!username || !email || !password) {
+          alert("Please fill in all fields.");
+          return;
         }
+
+        if (!email.includes("@")) {
+          alert("Please enter a valid email address.");
+          return;
+        }
+
+        // Retrieve existing users from localStorage
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+
+        // Check if username or email already exists
+        const isUserExists = users.some((user) => user.username === username || user.email === email);
+        if (isUserExists) {
+          alert("Username or email already exists. Please choose another one.");
+          return;
+        }
+
+        // Add new user to the array and save to localStorage
+        users.push({ username, email, password });
+        localStorage.setItem("users", JSON.stringify(users));
+
+        alert("Account created successfully!");
+        window.location.href = "login.html"; // Redirect to login page
       });
     </script>
   </body>
