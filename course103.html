@@ -4,25 +4,108 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>History of Computing - LMS System</title>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+      .file-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .file-list li span {
+        max-width: 70%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    </style>
   </head>
   <body class="bg-gradient-to-r from-blue-100 to-blue-300 min-h-screen">
+    <!-- Navigation Bar -->
     <nav class="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
       <h1 class="text-2xl font-semibold">History of Computing</h1>
-      <a href="dashboard.html"><button class="bg-yellow-600 px-4 py-2 rounded-lg hover:bg-yellow-700 transition">Go Back</button></a>
+      <a href="dashboard.html"><button class="bg-yellow-600 px-1 py-1 rounded-lg hover:bg-yellow-700 transition">Go Back</button></a>
     </nav>
 
+    <!-- Course Content -->
     <div class="max-w-3xl mx-auto p-6 mt-12 bg-white rounded-lg shadow-lg">
       <h2 class="text-3xl font-semibold text-blue-600 mb-4">Course Overview</h2>
-      <p class="text-black-600 mb-6">This course explores the history of computing, from early counting devices to modern computing technologies.</p>
+      <p class="text-black-600 mb-6">
+        This course explores the history of computing, from early counting devices to modern computing technologies.
+      </p>
       <h3 class="text-2xl font-semibold text-blue-600 mb-4">Instructor: Dr. Hassan Khatri</h3>
       <h3 class="text-xl font-semibold text-black-600 mb-4">Assignments & Quizzes</h3>
-      <ul class="list-disc pl-6 text-black-600">
+      <ul class="list-disc pl-6 text-black-600 mb-6">
         <li>Assignment 1: Early Counting Devices</li>
         <li>Assignment 2: The First Computers</li>
         <li>Quiz 1: History of Computing</li>
       </ul>
+
+      <!-- File Upload Section -->
+      <h3 class="text-xl font-semibold text-blue-600 mb-4">Upload Files</h3>
+      <div class="mb-6">
+        <input
+          type="file"
+          id="file-input"
+          class="block w-full mb-4 border border-gray-300 p-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+          multiple
+        />
+        <button
+          id="upload-btn"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+        >
+          Upload Files
+        </button>
+      </div>
+
+      <!-- Uploaded Files List -->
+      <h4 class="text-lg font-semibold text-black-600 mb-4">Uploaded Files:</h4>
+      <ul id="file-list" class="file-list list-disc pl-6 text-black-600"></ul>
     </div>
+
+    <!-- JavaScript -->
+    <script>
+      // Select elements
+      const fileInput = document.getElementById('file-input');
+      const uploadBtn = document.getElementById('upload-btn');
+      const fileList = document.getElementById('file-list');
+
+      // Event listener for uploading files
+      uploadBtn.addEventListener('click', () => {
+        const files = Array.from(fileInput.files); // Get the selected files as an array
+
+        // Check if files are selected
+        if (files.length === 0) {
+          alert('Please select at least one file to upload.');
+          return;
+        }
+
+        // Process each file
+        files.forEach((file) => {
+          // Display the uploaded file in the list
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <span>${file.name}</span>
+            <button
+              class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 transition"
+              onclick="removeFile(this)"
+            >
+              Remove
+            </button>
+          `;
+          fileList.appendChild(li);
+        });
+
+        // Clear the file input
+        fileInput.value = '';
+      });
+
+      // Remove file from the list
+      function removeFile(button) {
+        const li = button.parentElement;
+        li.remove();
+      }
+    </script>
   </body>
 </html>

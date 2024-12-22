@@ -8,14 +8,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
-        background: linear-gradient(135deg , rgb(230, 243, 255) 0%, rgb(94, 94, 94) 100%);
+        background: linear-gradient(135deg, rgb(118, 161, 201) 0%, rgb(43, 27, 27) 100%);
         color: #333;
       }
       body.dark {
         background-color: #121212;
         color: #e4e4e7;
       }
-
       .card {
         background-color: #f9fafb;
         padding: 16px;
@@ -23,7 +22,6 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         margin: 20px 0;
       }
-
       body.dark .card {
         background-color: #333333;
         border: 1px solid #444;
@@ -34,7 +32,7 @@
   <body class="min-h-screen">
     <!-- Navbar -->
     <nav class="bg-gray-700 p-4 text-white shadow-md flex justify-between items-center">
-      <h1 class="text-2xl font-bold"><i class='bx bx-edit-alt' style='color:#ffffff' ></i> LMS - Tasks</h1>
+      <h1 class="text-2xl font-bold"><i class='bx bx-edit-alt' style='color:#ffffff'></i> LMS - Tasks</h1>
       <a href="dashboard.html" class="bg-yellow-400 px-3 py-1 rounded-md text-sm font-semibold">
         Back to Dashboard
       </a>
@@ -42,31 +40,92 @@
 
     <!-- Task Section -->
     <div class="p-6">
-      <h2 class="text-2xl font-semibold mb-4"><i class='bx bx-edit-alt' ></i> Your Tasks</h2>
-      <div class="space-y-4">
+      <h2 class="text-2xl font-semibold mb-4"><i class='bx bx-edit-alt'></i> Your Tasks</h2>
+
+      <!-- Add Task Form -->
+      <div class="mb-6">
+        <input
+          id="task-input"
+          type="text"
+          placeholder="Enter a new task..."
+          class="w-full mb-4 p-3 border rounded shadow-sm focus:ring focus:ring-blue-300"
+        />
+        <button
+          id="add-task-btn"
+          class="bg-blue-600 text-white py-2 px-4 rounded shadow hover:bg-blue-800 transition duration-300"
+        >
+          Add Task
+        </button>
+      </div>
+
+      <!-- Task List -->
+      <div id="task-list" class="space-y-4">
+        <!-- Existing Tasks -->
         <div class="card">
           <ul class="list-disc pl-4 space-y-2">
             <li>Upcoming Assignment Due: Programming Fundamentals</li>
-          </ul>
-        </div>
-        <div class="card">
-          <ul class="list-disc pl-4 space-y-2">
-            <li>New Quiz Posted: History of Computing</li>
-          </ul>
-        </div>
-        <div class="card">
-          <ul class="list-disc pl-4 space-y-2">
-            <li>Upcoming Assignment: PF praaject</li>
-          </ul>
-        </div>
-        <div class="card">
-          <ul class="list-disc pl-4 space-y-2">
-            <li>Submission Deadline Extended: AICT Assignment</li>
-          </ul>
-        </div>
-        <div class="card">
-          <ul class="list-disc pl-4 space-y-2">
-            <li>parhlo bhai...</li>
+            <li>Upcoming Assignment Due: Calculas</li>
+            <li>Upcoming Quiz : AICT 12/12/2025</li>
           </ul>
         </div>
       </div>
+
+      <!-- Download Button -->
+      <button
+        id="download-tasks-btn"
+        class="mt-6 bg-green-600 text-white py-2 px-4 rounded shadow hover:bg-green-800 transition duration-300"
+      >
+        Download Tasks
+      </button>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+      // Initial Task Array
+      const tasks = [
+        "Upcoming Assignment Due: Programming Fundamentals"
+      ];
+
+      // Add Task Logic
+      document.getElementById("add-task-btn").addEventListener("click", () => {
+        const taskInput = document.getElementById("task-input");
+        const taskList = document.getElementById("task-list");
+
+        // Get the input value
+        const newTask = taskInput.value.trim();
+
+        // If input is not empty
+        if (newTask) {
+          // Add task to array
+          tasks.push(newTask);
+
+          // Create a new task card
+          const taskCard = document.createElement("div");
+          taskCard.className = "card";
+          taskCard.innerHTML = `
+            <ul class="list-disc pl-4 space-y-2">
+              <li>${newTask}</li>
+            </ul>
+          `;
+
+          // Append the task to the list
+          taskList.appendChild(taskCard);
+
+          // Clear the input field
+          taskInput.value = "";
+        } else {
+          alert("Please enter a task!");
+        }
+      });
+
+      // Download Tasks Logic
+      document.getElementById("download-tasks-btn").addEventListener("click", () => {
+        const blob = new Blob([tasks.join("\n")], { type: "text/plain" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "tasks.txt";
+        link.click();
+      });
+    </script>
+  </body>
+</html>
